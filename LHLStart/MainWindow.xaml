@@ -1,0 +1,320 @@
+﻿<Window x:Class="LHLStart.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LHLStart"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="700"  MinWidth="400" MinHeight="200"
+        Name="win"
+        AllowDrop="True" 
+        Drop="Window_Drop" 
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True" 
+        Background="Transparent"
+        WindowStyle="None" 
+        ResizeMode="CanResizeWithGrip">
+    <Window.Resources> 
+
+        <Style x:Key="ButtonStyleLoginOut" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle
+                                        Margin="2"
+                                        SnapsToDevicePixels="True"
+                                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                        StrokeDashArray="1 2"
+                                        StrokeThickness="1" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Height" Value="26" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="#555555" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                            <ContentPresenter
+                                x:Name="contentPresenter"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value=" #F1F9FF" />
+                                <Setter Property="Foreground" Value="#3F91D7" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GroypStyle" TargetType="{x:Type ListBox}">
+
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Vertical"></WrapPanel>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Grid>
+                            <ItemsPresenter></ItemsPresenter> 
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+
+                                    <Grid>
+                                        <Border BorderBrush="#E8F1F9" BorderThickness="0,0,0,1"  x:Name="gb"  Height="30" Width="120">
+                                            <ContentPresenter></ContentPresenter>
+                                        </Border>
+
+                                        
+                                    </Grid> 
+                                    <ControlTemplate.Triggers>
+
+                                        <DataTrigger Binding="{Binding IsChecked}" Value="true">
+                                            <Setter TargetName="gb" Property="Background" Value="#54C11A"></Setter>
+                                            <Setter TargetName="gb" Property="BorderThickness" Value="0,0,0,0"></Setter>
+                                        </DataTrigger>
+
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <StackPanel Tag="{Binding Id}"  VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonUp="Group_MouseLeftButtonUp" MouseRightButtonUp="Gb_MouseRightButtonUp">
+                                        <TextBlock x:Name="tn" Text="{Binding GroupName}" VerticalAlignment="Center" Foreground="#666E76"  FontSize="12" TextAlignment="Right" Padding="0,0,20,0" ></TextBlock>
+                                    </StackPanel>
+
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked}" Value="true">
+                                            <Setter TargetName="tn" Property="Foreground" Value="#FFFFFF"></Setter>
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FileStyle" TargetType="{x:Type ListBox}">
+
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+
+                        <WrapPanel  Orientation="Horizontal" Margin="0" IsItemsHost="True" ScrollViewer.CanContentScroll="True" ></WrapPanel>
+                       
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <ItemsPresenter></ItemsPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border x:Name="gb"  Height="90" Width="80" Margin="5" CornerRadius="3">
+                                        <ContentPresenter></ContentPresenter>
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="gb" Property="BorderBrush" Value="#F1F9FF" />
+                                            <Setter TargetName="gb" Property="BorderThickness" Value="1" />
+                                            <Setter TargetName="gb" Property="Background" Value="#D2D2CE" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <StackPanel Tag="{Binding }" Orientation="Vertical" Margin="3,10,3,10" Cursor="Hand" MouseLeftButtonUp="Item_MouseUp" MouseRightButtonUp="File_MouseRightButtonUp">
+                                        <Image Source="{Binding FileImagePath}" Width="40" Height="40"></Image>
+                                        <TextBlock Text="{Binding FileName}" Margin="0,2,0,0" Width="70" Height="50" FontSize="10" TextAlignment="Center" TextWrapping="Wrap"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+ 
+    </Window.Resources>
+
+    <Border MouseLeave="XF_MouseLeave" MouseEnter="XF_MouseEnter"  
+            Background="White"
+            BorderBrush="#C6C9CE"
+            BorderThickness="1"  >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" BorderBrush="#C6C9CE" Background="#F8FAFB">
+                <Grid>
+                    <TextBlock Text="LHL" Foreground="#728597" FontSize="14" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
+ 
+                    <TextBlock Text="X" ToolTip="隐藏" Cursor="Hand" PreviewMouseLeftButtonDown="Close_MouseLeftButtonUp" Foreground="#728597" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0"></TextBlock>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1" Grid.Column="0" Background="#F8FAFB" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition> 
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="#C6C9CE" BorderThickness="0,0,1,0">
+                    <ScrollViewer Width="300" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                  
+                        <ListBox  Name="gp"  Style="{StaticResource GroypStyle}"   VerticalAlignment="Top" >
+                        </ListBox> 
+                    </ScrollViewer>
+                </Border>
+                <Border Grid.Row="1" BorderBrush="#C6C9CE" Background="#01FFFFFF" BorderThickness="0,0,1,0" MouseRightButtonUp="GN_MouseRightButtonUp">
+                  
+                </Border>
+
+                <Popup
+                                                x:Name="buttonPup"
+                                                AllowsTransparency="True"
+                                                IsOpen="False"
+                                                Placement="Mouse"
+                                                PopupAnimation="Slide"
+                                                StaysOpen="False"
+                                                VerticalOffset="-22">
+                    <Border BorderBrush="#C6C9CE" BorderThickness="1">
+                        <StackPanel Background="White">
+                            <Button Cursor="Hand"  Click="XJ_Click"
+                                                                Content="新建"
+                                                                Style="{DynamicResource ButtonStyleLoginOut}" />
+                            <Button x:Name="gpcm" Cursor="Hand" Click="CM_Click"
+                                                                Content="重命名"
+                                                                Style="{DynamicResource ButtonStyleLoginOut}" />
+                            <Button x:Name="gpsc" Cursor="Hand"  Click="Gpsc_Click"
+                                                                Content="删除"
+                                                                Style="{DynamicResource ButtonStyleLoginOut}" />
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+
+            <ScrollViewer Grid.Row="1" Grid.Column="1"   x:Name="scrList" Margin="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <ListBox  Name="lb" Style="{StaticResource FileStyle}">
+                  </ListBox> 
+             </ScrollViewer>
+
+            <Popup
+                                                x:Name="filePup"
+                                                AllowsTransparency="True"
+                                                IsOpen="False"
+                                                Placement="Mouse"
+                                                PopupAnimation="Slide"
+                                                StaysOpen="False"
+                                                VerticalOffset="-22">
+                <Border BorderBrush="#C6C9CE" BorderThickness="1">
+                    <StackPanel Background="White">
+                        <Button x:Name="adminrun" Cursor="Hand"  Click="adminRun_Click"
+                                                                Content="管理员运行"
+                                                                Style="{DynamicResource ButtonStyleLoginOut}" />
+                        <Button x:Name="openDir" Cursor="Hand"  Click="openDir_Click"
+                                                                Content="打开文件夹"
+                                                                Style="{DynamicResource ButtonStyleLoginOut}" />
+
+                        <Button x:Name="gpfilesc" Cursor="Hand"  Click="fileDelete_Click"
+                                                                Content="删除"
+                                                                Style="{DynamicResource ButtonStyleLoginOut}" />
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+
+            <Border Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="0,1,0,0" BorderBrush="#C6C9CE" Background="#F8FAFB">
+                <Grid>
+                    <TextBlock x:Name="ff" Text="作者：一个可怕的逗比" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
+ 
+                    <StackPanel Margin="0,0,10,0" Height="30" Orientation="Horizontal" HorizontalAlignment="Right">
+
+                        <TextBlock Text="显示隐藏热键：CTR+Q" VerticalAlignment="Center" ></TextBlock>
+
+
+                        <CheckBox Margin="30,0,0,0" Content="开机启动" x:Name="cbxIsOpenRun" VerticalAlignment="Center" Cursor="Hand" Click="CbxIsOpenRun_Click"></CheckBox>
+                     
+                    </StackPanel>
+                </Grid> 
+            </Border>
+           
+        </Grid>
+
+       
+    </Border>
+</Window>
