@@ -435,6 +435,7 @@ namespace LHLStart
         /// </summary>
         private void TopShow()
         {
+            this.TopWindow();
             this.Show();
             //var top = this.Top;
             //var hideTop = -(this.ActualHeight - 15);
